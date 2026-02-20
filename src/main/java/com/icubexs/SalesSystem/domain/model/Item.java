@@ -10,13 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Item {
     private Long itemId;
-    private String codigoSku;
-    private String nombre;
-    private String descripcion;
-    private String medida;
-    // Dimensiones propias del producto para validación de espacio
-    private Double largo;
-    private Double ancho;
-    private Double alto;
-    private Double peso;
+    private String skuCode; // Código SKU único
+    private String name;
+    private String description;
+    private String unitMeasure; // Unidad de medida
+    private Double length; // Largo unitario
+    private Double width;  // Ancho unitario
+    private Double height; // Alto unitario
+    private Double weight; // Peso unitario
 }
