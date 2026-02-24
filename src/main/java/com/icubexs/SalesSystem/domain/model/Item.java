@@ -1,21 +1,19 @@
 package com.icubexs.SalesSystem.domain.model;
 
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Item {
-    private Long itemId;
-    private String skuCode; // Código SKU único
-    private String name;
-    private String description;
-    private String unitMeasure; // Unidad de medida
-    private Double length; // Largo unitario
-    private Double width;  // Ancho unitario
-    private Double height; // Alto unitario
-    private Double weight; // Peso unitario
+    private Long id;
+    private String serialNumber;
+    private Product product;           // product_id
+    private Batch batch;               // batch_id
+    private ConfiguracionDet status;   // status_config_det_id
 }
+

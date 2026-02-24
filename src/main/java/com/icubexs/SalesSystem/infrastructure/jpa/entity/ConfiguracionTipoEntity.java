@@ -1,17 +1,28 @@
 package com.icubexs.SalesSystem.infrastructure.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "configuracion_tipo")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ConfiguracionTipoEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer configuracionTipoId;
+    @Column(name = "configuracion_tipo_id")
+    private Long id;
+
+    @Column(unique = true, length = 100)
     private String codigo;
+
     private String nombre;
     private String estado;
-    private Boolean activo;
+
+    @Builder.Default
+    private Boolean activo = true;
 }

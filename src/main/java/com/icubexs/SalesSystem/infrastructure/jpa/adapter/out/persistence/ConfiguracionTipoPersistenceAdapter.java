@@ -13,49 +13,52 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class ConfiguracionTipoPersistenceAdapter implements ConfiguracionTipoRepository {
+
     private final ConfiguracionTipoJpaRepository jpaRepository;
 
     @Override
     public ConfiguracionTipo save(ConfiguracionTipo domain) {
-        ConfiguracionTipoEntity entity = new ConfiguracionTipoEntity();
-        entity.setConfiguracionTipoId(domain.getConfiguracionTipoId());
-        entity.setCodigo(domain.getCodigo());
-        entity.setNombre(domain.getNombre());
-        entity.setEstado(domain.getEstado());
-        entity.setActivo(domain.getActivo());
-
-        ConfiguracionTipoEntity saved = jpaRepository.save(entity);
-        return mapToDomain(saved);
+        ConfiguracionTipoEntity entity = toEntity(domain);
+        return toDomain(jpaRepository.save(entity));
     }
 
     @Override
-    public List<ConfiguracionTipo> findAll() {
-        return jpaRepository.findAll().stream().map(this::mapToDomain).collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<ConfiguracionTipo> findById(Integer id) {
-        return jpaRepository.findById(id).map(this::mapToDomain);
+    public Optional<ConfiguracionTipo> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override
     public Optional<ConfiguracionTipo> findByCodigo(String codigo) {
-        return jpaRepository.findByCodigo(codigo).map(this::mapToDomain);
+        return jpaRepository.findByCodigo(codigo).map(this::toDomain);
     }
 
     @Override
-    public List<ConfiguracionTipo> findByIniCodigo(String iniCodigo) {
-        return jpaRepository.findByCodigoStartingWith(iniCodigo).stream()
-                .map(this::mapToDomain).collect(Collectors.toList());
+    public List<ConfiguracionTipo> findAllActive() {
+        return jpaRepository.findByActivoTrue().stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
     }
 
-    private ConfiguracionTipo mapToDomain(ConfiguracionTipoEntity entity) {
+    // --- MÉTODOS DE MAPEO MANUAL ---
+    private ConfiguracionTipo toDomain(ConfiguracionTipoEntity entity) {
+        if (entity == null) return null;
         return ConfiguracionTipo.builder()
-                .configuracionTipoId(entity.getConfiguracionTipoId())
+                .id(entity.getId())
                 .codigo(entity.getCodigo())
                 .nombre(entity.getNombre())
                 .estado(entity.getEstado())
                 .activo(entity.getActivo())
+                .build();
+    }
+
+    private ConfiguracionTipoEntity toEntity(ConfiguracionTipo domain) {
+        if (domain == null) return null;
+        return ConfiguracionTipoEntity.builder()
+                .id(domain.getId())
+                .codigo(domain.getCodigo())
+                .nombre(domain.getNombre())
+                .estado(domain.getEstado())
+                .activo(domain.getActivo())
                 .build();
     }
 }

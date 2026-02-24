@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ConfiguracionDet {
-    private Integer configuracionDetId;
-    private Integer padreConfiguracionDetId;
-    private ConfiguracionCab configuracionCab; // Relación con la cabecera
+    private Long id;
+    private ConfiguracionDet padre; // Recursividad para jerarquías
+    private ConfiguracionCab cabecera;// Relación con la cabecera
     private String codigo;
     private String nombre;
     private String parametro;

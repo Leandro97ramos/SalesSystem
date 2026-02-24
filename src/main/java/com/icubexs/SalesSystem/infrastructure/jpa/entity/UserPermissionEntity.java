@@ -1,22 +1,25 @@
 package com.icubexs.SalesSystem.infrastructure.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Table(name = "user_permissions")
-@Data
+@Table(name = "user_permission")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class UserPermissionEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userPermissionId;
+    private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
-    @Column(name = "config_type_id", nullable = false)
-    private Long configTypeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "permission_config_det_id")
+    private ConfiguracionDetEntity permissionConfig;
 
-    @Column(name = "permission_level", length = 20)
+    @Column(name = "permission_level", length = 50)
     private String permissionLevel;
 }

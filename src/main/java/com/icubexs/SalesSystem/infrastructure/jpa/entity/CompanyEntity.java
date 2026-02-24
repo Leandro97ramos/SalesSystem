@@ -1,22 +1,32 @@
 package com.icubexs.SalesSystem.infrastructure.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Table(name = "companies")
-@Data
+@Table(name = "company")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CompanyEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long companyId;
+    private Long id;
 
-    @Column(name = "legal_name", nullable = false)
+    @Column(name = "tax_id_number", length = 50, unique = true, nullable = false)
+    private String taxIdNumber;
+
+    @Column(name = "legal_name", length = 200, nullable = false)
     private String legalName;
 
-    @Column(name = "tax_id", unique = true)
-    private String taxId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_company_id")
+    private CompanyEntity parentCompany;
 
-    @Column(name = "global_config", columnDefinition = "TEXT")
-    private String globalConfig;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_configuration_det_id")
+    private ConfiguracionDetEntity typeConfiguration;
 }

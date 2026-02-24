@@ -1,28 +1,29 @@
 package com.icubexs.SalesSystem.infrastructure.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Table(name = "items")
-@Data
+@Table(name = "item")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class ItemEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long itemId;
+    private Long id;
 
-    @Column(name = "sku_code", unique = true, nullable = false)
-    private String skuCode;
+    @Column(name = "serial_number", unique = true, length = 100)
+    private String serialNumber;
 
-    private String name;
-    private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
 
-    @Column(name = "unit_measure")
-    private String unitMeasure;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "batch_id")
+    private BatchEntity batch;
 
-    // Dimensiones físicas para el cálculo estilo Amazon
-    private Double length;
-    private Double width;
-    private Double height;
-    private Double weight;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_config_det_id")
+    private ConfiguracionDetEntity status;
 }

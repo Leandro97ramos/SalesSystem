@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ConfiguracionTipoRepository {
-    ConfiguracionTipo save(ConfiguracionTipo configuracionTipo);
-    List<ConfiguracionTipo> findAll();
-    Optional<ConfiguracionTipo> findById(Integer configTipoId);
+    ConfiguracionTipo save(ConfiguracionTipo tipo);
+    Optional<ConfiguracionTipo> findById(Long id);
     Optional<ConfiguracionTipo> findByCodigo(String codigo);
-    List<ConfiguracionTipo> findByIniCodigo(String iniCodigo);
+    List<ConfiguracionTipo> findAllActive();
 
 }

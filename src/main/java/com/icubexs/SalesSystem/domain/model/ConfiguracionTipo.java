@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ConfiguracionTipo {
-    private Integer configuracionTipoId;
+    private Long id;
     private String codigo;
     private String nombre;
     private String estado;

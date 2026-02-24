@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ConfiguracionCabRepository {
-    ConfiguracionCab save(ConfiguracionCab configuracionCab);
-    Optional<ConfiguracionCab> findById (Integer configCabId);
-    Optional<ConfiguracionCab> findByCodigo (String codigo);
-    List<ConfiguracionCab> findByConfigTipoId (Integer configTipoId);
+    ConfiguracionCab save(ConfiguracionCab cabecera);
+    Optional<ConfiguracionCab> findById(Long id);
+    Optional<ConfiguracionCab> findByCodigo(String codigo);
+    List<ConfiguracionCab> findByTipoId(Long tipoId);
 }

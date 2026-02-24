@@ -1,28 +1,36 @@
 package com.icubexs.SalesSystem.infrastructure.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Table(name = "warehouses")
-@Data
+@Table(name = "warehouse")
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class WarehouseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long warehouseId;
+    private Long id;
 
-    @Column(name = "company_id", nullable = false)
-    private Long companyId;
-
-    @Column(name = "location_id", nullable = false)
-    private Long locationId;
-
-    @Column(name = "config_header_id", nullable = false)
-    private Long configHeaderId;
-    /*id_configuracion_cab
-    * configuracion_det_id
-    * */
-
+    @Column(nullable = false, length = 100)
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private CompanyEntity company;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "geo_location_id")
+    private GeoLocationEntity geoLocation;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_warehouse_id")
+    private WarehouseEntity parentWarehouse;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_configuration_det_id")
+    private ConfiguracionDetEntity typeConfig;
 }

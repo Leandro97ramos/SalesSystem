@@ -5,8 +5,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ConfiguracionDetRepository {
-    ConfiguracionDet save (ConfiguracionDet configuracionDet);
-    void deleteById(Integer id);
-    Optional<ConfiguracionDet> findById(Integer configuracionId);
-    List<ConfiguracionDet> findByConfiguracionCabId (Integer configuracionCabId);
+    ConfiguracionDet save(ConfiguracionDet detalle);
+    Optional<ConfiguracionDet> findById(Long id);
+    Optional<ConfiguracionDet> findByCodigo(String codigo);
+
+    // Búsqueda por cabecera para facilitar la obtención de listas (ej. estados)
+    List<ConfiguracionDet> findByCabeceraCodigo(String cabeceraCodigo);
+
+    // Para manejar la relación recursiva padre_configuracion_det_id
+    List<ConfiguracionDet> findChildrenByPadreId(Long padreId);
+
 }

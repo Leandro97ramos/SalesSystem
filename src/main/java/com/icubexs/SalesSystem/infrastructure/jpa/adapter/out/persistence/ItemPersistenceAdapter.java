@@ -1,54 +1,73 @@
 package com.icubexs.SalesSystem.infrastructure.jpa.adapter.out.persistence;
 
-import com.icubexs.SalesSystem.domain.model.Item;
 import com.icubexs.SalesSystem.application.port.out.ItemRepository;
-import com.icubexs.SalesSystem.infrastructure.jpa.entity.ItemEntity;
+import com.icubexs.SalesSystem.domain.model.*;
+import com.icubexs.SalesSystem.infrastructure.jpa.entity.*;
 import com.icubexs.SalesSystem.infrastructure.jpa.repository.ItemJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class ItemPersistenceAdapter implements ItemRepository {
 
-    private final ItemJpaRepository itemJpaRepository;
+    private final ItemJpaRepository jpaRepository;
 
     @Override
-    public Item save(Item item) {
-        ItemEntity entity = new ItemEntity();
-        entity.setSkuCode(item.getSkuCode()); // [cite: 176]
-        entity.setName(item.getName()); // [cite: 177]
-        entity.setDescription(item.getDescription()); // [cite: 177]
-        entity.setUnitMeasure(item.getUnitMeasure()); // [cite: 178]
-        entity.setLength(item.getLength()); //
-        entity.setWidth(item.getWidth()); //
-        entity.setHeight(item.getHeight()); //
-        entity.setWeight(item.getWeight()); //
-
-        ItemEntity saved = itemJpaRepository.save(entity);
-        return mapToDomain(saved);
+    public Item save(Item domain) {
+        return toDomain(jpaRepository.save(toEntity(domain)));
     }
 
     @Override
     public Optional<Item> findById(Long id) {
-        return itemJpaRepository.findById(id).map(this::mapToDomain);
+        return jpaRepository.findById(id).map(this::toDomain);
     }
-
 
     @Override
-    public Optional<Item> findBySku(String sku) {
-        return Optional.empty();
+    public Optional<Item> findBySerialNumber(String serialNumber) {
+        return jpaRepository.findBySerialNumber(serialNumber).map(this::toDomain);
     }
 
+    @Override
+    public List<Item> findByProductId(Long productId) {
+        return jpaRepository.findByProductId(productId).stream()
+                .map(this::toDomain).collect(Collectors.toList());
+    }
 
+    @Override
+    public List<Item> findByBatchId(Long batchId) {
+        return jpaRepository.findByBatchId(batchId).stream()
+                .map(this::toDomain).collect(Collectors.toList());
+    }
 
-    private Item mapToDomain(ItemEntity entity) {
-        return new Item(
-                entity.getItemId(), entity.getSkuCode(), entity.getName(),
-                entity.getDescription(), entity.getUnitMeasure(), entity.getLength(),
-                entity.getWidth(), entity.getHeight(), entity.getWeight()
-        );
+    @Override
+    public void deleteById(Long id) {
+        jpaRepository.deleteById(id);
+    }
+
+    private Item toDomain(ItemEntity entity) {
+        if (entity == null) return null;
+        return Item.builder()
+                .id(entity.getId())
+                .serialNumber(entity.getSerialNumber())
+                .product(entity.getProduct() != null ? Product.builder().id(entity.getProduct().getId()).build() : null)
+                .batch(entity.getBatch() != null ? Batch.builder().id(entity.getBatch().getId()).build() : null)
+                .status(entity.getStatus() != null ? ConfiguracionDet.builder().id(entity.getStatus().getId()).build() : null)
+                .build();
+    }
+
+    private ItemEntity toEntity(Item domain) {
+        if (domain == null) return null;
+        return ItemEntity.builder()
+                .id(domain.getId())
+                .serialNumber(domain.getSerialNumber())
+                .product(domain.getProduct() != null ? ProductEntity.builder().id(domain.getProduct().getId()).build() : null)
+                .batch(domain.getBatch() != null ? BatchEntity.builder().id(domain.getBatch().getId()).build() : null)
+                .status(domain.getStatus() != null ? ConfiguracionDetEntity.builder().id(domain.getStatus().getId()).build() : null)
+                .build();
     }
 }

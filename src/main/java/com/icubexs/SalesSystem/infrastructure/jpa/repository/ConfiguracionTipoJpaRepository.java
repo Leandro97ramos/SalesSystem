@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface ConfiguracionTipoJpaRepository extends JpaRepository<ConfiguracionTipoEntity, Integer> {
+public interface ConfiguracionTipoJpaRepository extends JpaRepository<ConfiguracionTipoEntity, Long> {
     Optional<ConfiguracionTipoEntity> findByCodigo(String codigo);
-
-    @Query("SELECT c FROM ConfiguracionTipoEntity c WHERE c.codigo LIKE :iniCodigo%")
-    List<ConfiguracionTipoEntity> findByCodigoStartingWith(String iniCodigo);
+    List<ConfiguracionTipoEntity> findByActivoTrue();
 }

@@ -1,27 +1,45 @@
 package com.icubexs.SalesSystem.infrastructure.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
+import lombok.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "batch")
-@Data
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class BatchEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long batchId;
+    private Long id;
 
-    @Column(nullable = false)
-    private Long itemId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
 
-    @Column(name = "batch_code", unique = true)
-    private String batchCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private CompanyEntity company;
 
+    @Column(nullable = false, length = 100)
+    private String code;
+
+    @Column(name = "invoice_number", length = 100)
+    private String invoiceNumber;
+
+    @Column(name = "initial_quantity", nullable = false)
+    private Integer initialQuantity;
+
+    @Column(name = "current_quantity", nullable = false)
+    private Integer currentQuantity;
+
+    @Column(name = "entry_date")
     private LocalDateTime entryDate;
-    private LocalDateTime expiryDate;
 
-    @Column(name = "provider_id")
-    private Long providerId;
+    @Column(name = "expiration_date")
+    private LocalDateTime expirationDate;
+
+    @Column(name = "unit_cost")
+    private BigDecimal unitCost;
 }
