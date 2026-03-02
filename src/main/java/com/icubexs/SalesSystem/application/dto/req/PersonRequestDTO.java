@@ -9,4 +9,5 @@ public class PersonRequestDTO {
     private String identification; // DNI/Cédula [cite: 56]
     private String phone;
     private String personalAddress;
+    private Long geoLocationId; // Foreign key to GeoLocation
 }

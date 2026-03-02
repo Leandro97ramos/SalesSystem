@@ -13,6 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user-roles")
 @RequiredArgsConstructor
+@CrossOrigin
+
 public class UserRoleController {
 
     private final UserRoleService service;

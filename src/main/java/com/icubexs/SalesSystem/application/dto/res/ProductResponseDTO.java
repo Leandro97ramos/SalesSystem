@@ -17,5 +17,6 @@ public class ProductResponseDTO {
     private BigDecimal basePrice;
     private String unitMeasureName; // Nombre de la unidad (ej: "Unidad", "Kg")
     private String taxCategoryName; // Nombre de la categoría (ej: "IVA 21%")
+    private String imageUrl; // URL de la imagen del producto
 }
 

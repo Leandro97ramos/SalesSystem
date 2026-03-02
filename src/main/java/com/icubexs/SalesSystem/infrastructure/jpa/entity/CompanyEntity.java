@@ -29,4 +29,9 @@ public class CompanyEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_configuration_det_id")
     private ConfiguracionDetEntity typeConfiguration;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "geo_location_id")
+    private GeoLocationEntity geoLocation;
+
 }

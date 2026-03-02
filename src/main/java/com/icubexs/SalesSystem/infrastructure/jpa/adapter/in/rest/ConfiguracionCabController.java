@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/configuracion-cabeceras")
+@RequestMapping("/api/v1/configuracion-cabecera")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ConfiguracionCabController {
 
     private final ConfiguracionCabService service;

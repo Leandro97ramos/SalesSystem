@@ -10,6 +10,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/configuracion-tipos")
 @RequiredArgsConstructor
+@CrossOrigin
+
 public class ConfiguracionTipoController {
 
     private final ConfiguracionTipoService service;

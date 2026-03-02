@@ -26,4 +26,8 @@ public class StockEntity {
 
     @Column(name = "current_quantity", nullable = false)
     private Integer currentQuantity;
+
+    @Column(name = "reserved_quantity", nullable = false)
+    private Integer reservedQuantity;
+
 }

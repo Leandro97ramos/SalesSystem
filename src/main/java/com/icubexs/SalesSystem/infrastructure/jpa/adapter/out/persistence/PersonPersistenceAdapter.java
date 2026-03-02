@@ -59,15 +59,13 @@ public class PersonPersistenceAdapter implements PersonRepository {
                 .build();
     }
 
-    private PersonEntity toEntity(Person domain) {
-        if (domain == null) return null;
-        return PersonEntity.builder()
-                .id(domain.getId())
-                .firstName(domain.getFirstName())
-                .lastName(domain.getLastName())
-                .identification(domain.getIdentification())
-                .phone(domain.getPhone())
-                .personalAddress(domain.getPersonalAddress())
-                .build();
+    public PersonEntity toEntity(Person domain) {
+        PersonEntity entity = new PersonEntity();
+        entity.setFirstName(domain.getFirstName());
+        entity.setLastName(domain.getLastName());
+        entity.setIdentification(domain.getIdentification()); // <-- CRÍTICO
+        entity.setPhone(domain.getPhone());
+        entity.setPersonalAddress(domain.getPersonalAddress()); // <-- CRÍTICO
+        return entity;
     }
 }

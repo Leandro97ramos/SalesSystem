@@ -29,6 +29,8 @@ public class ProductMapper {
                 .basePrice(domain.getBasePrice())
                 .unitMeasureName(domain.getUnitMeasure() != null ? domain.getUnitMeasure().getNombre() : null)
                 .taxCategoryName(domain.getTaxCategory() != null ? domain.getTaxCategory().getNombre() : null)
+
+
                 .build();
     }
 }

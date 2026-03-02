@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/additional-fields")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AdditionalFieldController {
 
     private final AdditionalFieldService service;

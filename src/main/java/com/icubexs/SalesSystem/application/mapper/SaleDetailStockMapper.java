@@ -18,6 +18,7 @@ public class SaleDetailStockMapper {
                 .item(request.getItemId() != null ? Item.builder().id(request.getItemId()).build() : null)
                 .quantity(request.getQuantity())
                 .build();
+
     }
 
     public SaleDetailStockResponseDTO toResponse(SaleDetailStock domain) {
@@ -28,6 +29,7 @@ public class SaleDetailStockMapper {
                 .stockId(domain.getStock() != null ? domain.getStock().getId() : null)
                 .serialNumber(domain.getItem() != null ? domain.getItem().getSerialNumber() : "N/A")
                 .quantity(domain.getQuantity())
+                
                 .build();
     }
 }

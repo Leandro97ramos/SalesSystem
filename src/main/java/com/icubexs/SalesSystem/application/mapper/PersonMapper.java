@@ -15,6 +15,7 @@ public class PersonMapper {
                 .identification(request.getIdentification())
                 .phone(request.getPhone())
                 .personalAddress(request.getPersonalAddress())
+                .geoLocationId(request.getGeoLocationId())
                 .build();
     }
 

@@ -16,4 +16,7 @@ public class Person {
     private String identification; // UNIQUE NOT NULL en el script
     private String phone;
     private String personalAddress;
+    //geo_location_id
+    private GeoLocation geoLocation;
+
 }

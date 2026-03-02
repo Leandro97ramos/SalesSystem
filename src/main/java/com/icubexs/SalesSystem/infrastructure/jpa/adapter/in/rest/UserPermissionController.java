@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user-permissions")
 @RequiredArgsConstructor
+@CrossOrigin
+
 public class UserPermissionController {
 
     private final UserPermissionService service;

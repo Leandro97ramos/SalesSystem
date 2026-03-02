@@ -9,6 +9,7 @@ import com.icubexs.SalesSystem.infrastructure.jpa.entity.UserEntity;
 import com.icubexs.SalesSystem.infrastructure.jpa.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,16 @@ public class UserPersistenceAdapter implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return false;
+    }
+
+    @Override
     public List<User> findAll() {
         return jpaRepository.findAll().stream().map(this::toDomain).collect(Collectors.toList());
     }
@@ -55,7 +66,14 @@ public class UserPersistenceAdapter implements UserRepository {
                 .email(entity.getEmail())
                 // Aquí ya no debería dar error si el campo existe en la entidad
                 .person(entity.getPerson() != null ?
-                        Person.builder().id(entity.getPerson().getId()).build() : null)
+                        Person.builder()
+                                .id(entity.getPerson().getId())
+                                .firstName(entity.getPerson().getFirstName())
+                                .lastName(entity.getPerson().getLastName())
+                                .identification(entity.getPerson().getIdentification())
+                                .phone(entity.getPerson().getPhone())
+                                .personalAddress(entity.getPerson().getPersonalAddress())
+                                .build() : null)
                 .company(entity.getCompany() != null ?
                         Company.builder().id(entity.getCompany().getId()).build() : null)
                 .build();
@@ -68,8 +86,26 @@ public class UserPersistenceAdapter implements UserRepository {
                 .username(domain.getUsername())
                 .passwordHash(domain.getPasswordHash())
                 .email(domain.getEmail())
-                .person(domain.getPerson() != null ? PersonEntity.builder().id(domain.getPerson().getId()).build() : null)
+                .person(domain.getPerson() != null ?
+                        PersonEntity.builder()
+                                .id(domain.getPerson().getId())
+                                .firstName(domain.getPerson().getFirstName())
+                                .lastName(domain.getPerson().getLastName())
+                                .identification(domain.getPerson().getIdentification())
+                                .phone(domain.getPerson().getPhone())
+                                .personalAddress(domain.getPerson().getPersonalAddress()) // Aquí se envía a la DB
+                                .build() : null)
                 .company(domain.getCompany() != null ? CompanyEntity.builder().id(domain.getCompany().getId()).build() : null)
                 .build();
     }
+
+
+    @Override
+    @Transactional // IMPORTANTE para operaciones @Modifying
+    public void assignRole(Long userId, Long roleId) {
+        // Llamamos a la query nativa que definimos en el JpaRepository
+        jpaRepository.assignRole(userId, roleId);
+    }
+
+
 }

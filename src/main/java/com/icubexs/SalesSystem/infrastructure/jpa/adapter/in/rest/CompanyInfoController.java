@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/company-info")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CompanyInfoController {
     private final CompanyInfoService service;
 

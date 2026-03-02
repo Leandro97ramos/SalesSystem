@@ -30,4 +30,11 @@ public class PersonEntity {
 
     @Column(name = "personal_address", columnDefinition = "TEXT")
     private String personalAddress;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "geo_location_id")
+    private GeoLocationEntity geoLocation;
+
+
+
 }

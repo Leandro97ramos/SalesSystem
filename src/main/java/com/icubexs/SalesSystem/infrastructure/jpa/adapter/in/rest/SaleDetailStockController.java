@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/sale-detail-stocks")
 @RequiredArgsConstructor
+@CrossOrigin
+
 public class SaleDetailStockController {
 
     private final SaleDetailStockService service;

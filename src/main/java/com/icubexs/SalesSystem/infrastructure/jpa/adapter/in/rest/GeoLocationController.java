@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/geo-locations")
 @RequiredArgsConstructor
+@CrossOrigin
+
 public class GeoLocationController {
 
     private final GeoLocationService service;

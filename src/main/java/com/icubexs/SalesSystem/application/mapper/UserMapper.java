@@ -13,22 +13,51 @@ public class UserMapper {
     public User toDomain(UserRequestDTO request) {
         if (request == null) return null;
 
-        return User.builder()
-                .person(Person.builder().id(request.getPersonId()).build())
-                .company(Company.builder().id(request.getCompanyId()).build())
-                .username(request.getUsername())
-                .passwordHash(request.getPassword()) // Nota: La encriptación se hace en el Service
-                .email(request.getEmail())
+        // Mapeamos los datos de cuenta (User)
+        User user = User.builder()
+                .username(request.getUser().getUsername())
+                .email(request.getUser().getEmail()) // ¡Aquí se soluciona el email NULL!
+                .passwordHash(request.getUser().getPassword_hash())
                 .build();
+
+        // Mapeamos la persona
+        Person person = Person.builder()
+                .firstName(request.getPerson().getFirst_name())
+                .lastName(request.getPerson().getLast_name())
+                .identification(request.getPerson().getIdentification())
+                .phone(request.getPerson().getPhone())
+                .personalAddress(request.getPerson().getPersonal_address())
+                .build();
+
+        // Mapeamos la empresa si existe
+        Company company = null;
+        if (request.getCompany() != null && request.getCompany().getLegal_name() != null) {
+            company = Company.builder()
+                    .legalName(request.getCompany().getLegal_name())
+                    .taxIdNumber(request.getCompany().getTax_id())
+                    .build();
+        }
+
+        user.setPerson(person);
+        user.setCompany(company);
+        return user;
     }
+
+
 
     public UserResponseDTO toResponse(User domain) {
         if (domain == null) return null;
 
         String fullName = "";
-        if (domain.getPerson() != null) {
-            fullName = domain.getPerson().getFirstName() + " " + domain.getPerson().getLastName();
-        }
+        Person person = Person.builder()
+                .firstName(domain.getPerson().getFirstName())
+                .lastName(domain.getPerson().getLastName())
+                .identification(domain.getPerson().getIdentification()) // Asegura que esté aquí
+                .phone(domain.getPerson().getPhone())
+                .personalAddress(domain.getPerson().getPersonalAddress()) // ¡ESTA LÍNEA FALTABA!
+                .build();
+
+
 
         return UserResponseDTO.builder()
                 .id(domain.getId())

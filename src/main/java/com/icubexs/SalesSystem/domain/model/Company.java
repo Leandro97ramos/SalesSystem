@@ -15,4 +15,8 @@ public class Company {
     private String legalName;   // Nombre legal o razón social
     private Company parentCompany; // Relación recursiva para sucursales
     private ConfiguracionDet typeConfiguration; // Tipo de empresa (S.A., S.R.L., etc.)
+    //geo_location_id
+    private GeoLocation geoLocation;
+    //legal address
+    private String legalAddress;
 }

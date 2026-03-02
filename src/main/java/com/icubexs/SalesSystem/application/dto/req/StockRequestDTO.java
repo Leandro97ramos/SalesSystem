@@ -8,4 +8,5 @@ public class StockRequestDTO {
     private Long productId;
     private Long locationId; // ID de ConfiguracionDet (Bodega/Estante)
     private Integer currentQuantity;
+    private Integer reservedQuantity;
 }

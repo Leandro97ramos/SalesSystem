@@ -11,4 +11,5 @@ public class StockResponseDTO {
     private String productName;
     private String locationName;
     private Integer currentQuantity;
+    private Integer reserved_quantity;
 }

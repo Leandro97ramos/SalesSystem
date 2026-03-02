@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/configuracion-detalles")
 @RequiredArgsConstructor
+@CrossOrigin
+
 public class ConfiguracionDetController {
 
     private final ConfiguracionDetService service;

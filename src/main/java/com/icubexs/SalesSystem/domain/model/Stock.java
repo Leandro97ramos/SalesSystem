@@ -15,4 +15,5 @@ public class Stock {
     private Product product;              // product_id
     private ConfiguracionDet location;    // location_config_det_id
     private Integer currentQuantity;      // current_quantity
+    private Integer reservedQuantity;     // reserved_quantity
 }

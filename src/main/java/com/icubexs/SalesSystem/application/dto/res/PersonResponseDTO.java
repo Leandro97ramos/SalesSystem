@@ -11,4 +11,5 @@ public class PersonResponseDTO {
     private String identification;
     private String phone;
     private String personalAddress;
+    private String geoLocationName; // Nombre de la ubicación geográfica
 }
